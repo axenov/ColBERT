@@ -1,3 +1,9 @@
+# Training with ORCAS Dataset
+* Create Mongodb and export new url and title triples with Script `AddMSMarco2Mongo.py`
+* python -m src.train --triples triples.train.small.tsv --data_dir  --query_maxlen 32 --doc_maxlen 180 --bsize 8 (Only for GTX 1060 necessary)
+
+
+
 # ColBERT: Contextualized Late Interaction over BERT
 
 This is the reference implementation of the paper **ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT**, to appear at SIGIR'20 ([preprint](https://arxiv.org/abs/2004.12832)).

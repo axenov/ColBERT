@@ -1,6 +1,6 @@
 # Training with ORCAS Dataset
 * Create Mongodb and export new url and title triples with Script `AddMSMarco2Mongo.py`
-* python -m src.train --triples triples.train.small.tsv --data_dir  --query_maxlen 32 --doc_maxlen 180 --bsize 8 (Only for GTX 1060 necessary)
+* python -m src.train --triples orcas_urls.tsv --data_dir output --query_maxlen 32 --doc_maxlen 180 --bsize 8 (Only for GTX 1060 necessary)
 
 
 

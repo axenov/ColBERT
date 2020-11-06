@@ -149,11 +149,17 @@ if __name__ == '__main__':
     """
     #triples_urls = []
     #triples_titles = []
-    outfile_urls = open('orcas_urls.tsv', 'w')
-    outfile_titles = open('orcas_titles.tsv', 'w')
+    
+    WRITE_SINGLES = False
+    if WRITE_SINGLES:
+        outfile_urls = open('orcas_urls.tsv', 'w')
+        outfile_titles = open('orcas_titles.tsv', 'w')
+    else: 
+        outfile_combined = open('orcas_combined.tsv', 'w')
     
     _tmp_results = []
     counter = 0
+    
     
     with open('/media/philipp/F25225165224E0D96/tmp/Mongodb/orcas-doctrain-top2.txt', 'r') as f:
     #with gzip.open(path,'rt') as f:
@@ -168,8 +174,17 @@ if __name__ == '__main__':
                     #print(_tmp_results)
                     try: 
                         tuple_url, tuple_title = create_triple(current_qid, _tmp_results)
-                        outfile_urls.write("\t".join(tuple_url) + '\n')
-                        outfile_titles.write("\t".join(tuple_title) + '\n')
+                        if WRITE_SINGLES:
+                            outfile_urls.write("\t".join(tuple_url) + '\n')
+                            outfile_titles.write("\t".join(tuple_title) + '\n')
+                        else: 
+                            if len(tuple_title[1]) > 4 and len(tuple_title[2]):
+                                combined_result = (tuple_title[0] + '\t' +
+                                      tuple_title[1] + '|' + tuple_url[1] + '\t' +
+                                      tuple_title[2] + '|' + tuple_url[2] + '\n')
+                                #print(combined_result)
+                                outfile_combined.write(combined_result)
+                            #pdb.set_trace()
                     except TypeError:
                         counter += 1
                         #print(counter)
@@ -195,8 +210,8 @@ if __name__ == '__main__':
             #if index == 100000: 
             #    break
             
-    outfile_urls.close()
-    outfile_titles.close()
+    #outfile_urls.close()
+    #outfile_titles.close()
             
             
 

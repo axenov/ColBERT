@@ -5,6 +5,8 @@ import torch.nn as nn
 from transformers import BertPreTrainedModel, BertModel, BertTokenizer
 from src.parameters import DEVICE
 import logging
+import pdb 
+
 logging.basicConfig(level=logging.ERROR)
 
 class ColBERT(BertPreTrainedModel):
@@ -59,8 +61,9 @@ class ColBERT(BertPreTrainedModel):
         return (D, mask) if return_mask else D
 
     def score(self, Q, D):
+        #pdb.set_trace()
         if self.similarity_metric == 'cosine':
-            return (Q @ D.permute(0, 2, 1)).max(2).values.sum(1)
+            return (Q.float() @ D.permute(0, 2, 1)).max(2).values.sum(1)
         
         assert self.similarity_metric == 'l2'
         return (-1.0 * ((Q.unsqueeze(2) - D.unsqueeze(1))**2).sum(-1)).max(-1).values.sum(-1)

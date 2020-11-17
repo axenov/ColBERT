@@ -52,6 +52,7 @@ def main():
         args.qrels = os.path.join(args.data_dir, args.qrels)
 
     args.colbert, args.checkpoint = load_colbert(args)
+    args.colbert = args.colbert.half() #!!!!!!!! HALF PRECISION
     args.qrels = load_qrels(args.qrels)
     args.queries, args.topK_docs, args.topK_pids = load_topK(args.topK)
 

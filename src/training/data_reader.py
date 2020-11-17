@@ -10,7 +10,7 @@ from src.parameters import DEVICE, SAVED_CHECKPOINTS
 
 from src.model import ColBERT
 from src.utils import print_message, save_checkpoint
-
+import pdb
 
 class TrainReader:
     def __init__(self, data_file):
@@ -49,6 +49,7 @@ def train(args):
 
     for batch_idx in range(args.maxsteps):
         Batch = reader.get_minibatch(args.bsize)
+        #pdb.set_trace()
         Batch = sorted(Batch, key=lambda x: max(len(x[1]), len(x[2])))
 
         for B_idx in range(args.accumsteps):

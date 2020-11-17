@@ -1,7 +1,7 @@
 from src.parameters import DEVICE
 from src.model import ColBERT
 from src.utils import print_message, load_checkpoint
-
+import pdb
 
 def load_qrels(qrels_path):
     if qrels_path is None:
@@ -46,6 +46,7 @@ def load_topK(topK_path):
             topK_pids[qid] = topK_pids.get(qid, [])
             topK_pids[qid].append(pid)
 
+    #pdb.set_trace()
     assert all(len(topK_pids[qid]) == len(set(topK_pids[qid])) for qid in topK_pids)
 
     Ks = [len(topK_pids[qid]) for qid in topK_pids]
@@ -58,7 +59,7 @@ def load_topK(topK_path):
 
 def load_colbert(args):
     print_message("#> Loading model checkpoint.")
-    colbert = ColBERT.from_pretrained('bert-base-uncased',
+    colbert = ColBERT.from_pretrained('bert-base-multilingual-uncased',
                                       query_maxlen=args.query_maxlen,
                                       doc_maxlen=args.doc_maxlen,
                                       dim=args.dim,

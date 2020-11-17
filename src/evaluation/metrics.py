@@ -1,3 +1,5 @@
+#import pdb 
+
 class Metrics:
     def __init__(self, mrr_depths: dict, recall_depths: dict, total_queries=None):
         self.results = {}
@@ -38,7 +40,7 @@ def evaluate_recall(qrels, queries, topK_pids):
     if qrels is None:
         return
 
-    assert set(qrels.keys()) == set(queries.keys())
+    assert set(qrels.keys()) == set(queries.keys())   #55k vs 6k 
     recall_at_k = [len(set.intersection(set(qrels[qid]), set(topK_pids[qid]))) / len(qrels[qid]) for qid in qrels]
     recall_at_k = sum(recall_at_k) / len(qrels)
     recall_at_k = round(recall_at_k, 3)

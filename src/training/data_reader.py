@@ -30,7 +30,7 @@ def manage_checkpoints(colbert, optimizer, batch_idx):
 
 
 def train(args):
-    colbert = ColBERT.from_pretrained('bert-base-multilingual-uncased',
+    colbert = ColBERT.from_pretrained('xlm-roberta-base',
                                       query_maxlen=args.query_maxlen,
                                       doc_maxlen=args.doc_maxlen,
                                       dim=args.dim,

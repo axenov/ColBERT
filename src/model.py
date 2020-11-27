@@ -21,10 +21,15 @@ class ColBERT(XLMRobertaModel):
 
         #self.tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased')
         self.tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-base')
+        self.tokenizer.add_tokens(["[unused0]"])
+        self.tokenizer.add_tokens(["[unused1]"])
+        
         self.skiplist = {w: True for w in string.punctuation}
 
         #self.bert = BertModel(config)
         self.bert = XLMRobertaModel(config)
+        self.bert.resize_token_embeddings(len(self.tokenizer)) 
+        
         self.linear = nn.Linear(config.hidden_size, dim, bias=False)
 
         self.init_weights()
@@ -80,7 +85,7 @@ class ColBERT(XLMRobertaModel):
 
     def _encode(self, x, max_length):
         input_ids = self.tokenizer.encode(x, add_special_tokens=True, max_length=max_length)
-
+        #print(input_ids)
         padding_length = max_length - len(input_ids)
         attention_mask = [1] * len(input_ids) + [0] * padding_length
         input_ids = input_ids + [103] * padding_length

@@ -24,7 +24,7 @@ class ColBERT(XLMRobertaModel):
         self.tokenizer.add_tokens(["[unused0]"])
         self.tokenizer.add_tokens(["[unused1]"])
         
-        self.skiplist = {w: True for w in string.punctuation}
+        self.skiplist = {}#{w: True for w in string.punctuation}
 
         #self.bert = BertModel(config)
         self.bert = XLMRobertaModel(config)

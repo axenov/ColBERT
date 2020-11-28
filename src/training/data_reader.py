@@ -48,6 +48,13 @@ def train(args):
     train_loss = 0.0
 
     for batch_idx in range(args.maxsteps):
+        if batch_idx % 1000 == 0: 
+            #Linear falling LR 
+            lr_linear_down = (args.maxsteps - batch_idx) * args.lr / args.maxsteps
+            print('Lowering Learning Rate to :', lr_linear_down)
+            optimizer = AdamW(colbert.parameters(), lr=lr_linear_down, eps=1e-8)
+            optimizer.zero_grad()
+            
         Batch = reader.get_minibatch(args.bsize)
         #pdb.set_trace()
         Batch = sorted(Batch, key=lambda x: max(len(x[1]), len(x[2])))

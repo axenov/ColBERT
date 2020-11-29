@@ -3,10 +3,13 @@ import torch
 import torch.nn as nn
 
 from transformers import BertPreTrainedModel, BertModel, BertTokenizer
+from transformers import ElectraForPreTraining, ElectraTokenizer, ElectraModel
 from src.parameters import DEVICE
 
+import logging
+logging.basicConfig(level=logging.ERROR)
 
-class ColBERT(BertPreTrainedModel):
+class ColBERT(ElectraForPreTraining):
     def __init__(self, config, query_maxlen, doc_maxlen, dim=128, similarity_metric='cosine'):
         super(ColBERT, self).__init__(config)
 
@@ -14,10 +17,10 @@ class ColBERT(BertPreTrainedModel):
         self.doc_maxlen = doc_maxlen
         self.similarity_metric = similarity_metric
 
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.tokenizer = ElectraTokenizer.from_pretrained('google/electra-base-discriminator')
         self.skiplist = {w: True for w in string.punctuation}
 
-        self.bert = BertModel(config)
+        self.bert = ElectraModel(config)
         self.linear = nn.Linear(config.hidden_size, dim, bias=False)
 
         self.init_weights()

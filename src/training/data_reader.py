@@ -30,7 +30,7 @@ def manage_checkpoints(colbert, optimizer, batch_idx):
 
 
 def train(args):
-    colbert = ColBERT.from_pretrained('google/electra-base-discriminator',
+    colbert = ColBERT.from_pretrained('albert-base-v2',
                                       query_maxlen=args.query_maxlen,
                                       doc_maxlen=args.doc_maxlen,
                                       dim=args.dim,

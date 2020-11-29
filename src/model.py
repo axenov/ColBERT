@@ -3,13 +3,13 @@ import torch
 import torch.nn as nn
 
 from transformers import BertPreTrainedModel, BertModel, BertTokenizer
-from transformers import ElectraForPreTraining, ElectraTokenizer, ElectraModel
+from transformers import AlbertForPreTraining, AlbertModel, AlbertTokenizer
 from src.parameters import DEVICE
 
 import logging
 logging.basicConfig(level=logging.ERROR)
 
-class ColBERT(ElectraForPreTraining):
+class ColBERT(AlbertForPreTraining):
     def __init__(self, config, query_maxlen, doc_maxlen, dim=128, similarity_metric='cosine'):
         super(ColBERT, self).__init__(config)
 
@@ -17,10 +17,15 @@ class ColBERT(ElectraForPreTraining):
         self.doc_maxlen = doc_maxlen
         self.similarity_metric = similarity_metric
 
-        self.tokenizer = ElectraTokenizer.from_pretrained('google/electra-base-discriminator')
+        self.tokenizer = AlbertTokenizer.from_pretrained('albert-base-v2')
+        self.tokenizer.add_tokens(["[unused0]"])
+        self.tokenizer.add_tokens(["[unused1]"])
+        
         self.skiplist = {w: True for w in string.punctuation}
 
-        self.bert = ElectraModel(config)
+        self.bert = AlbertModel(config)
+        self.bert.resize_token_embeddings(len(self.tokenizer)) 
+        
         self.linear = nn.Linear(config.hidden_size, dim, bias=False)
 
         self.init_weights()
@@ -75,7 +80,7 @@ class ColBERT(ElectraForPreTraining):
 
     def _encode(self, x, max_length):
         input_ids = self.tokenizer.encode(x, add_special_tokens=True, max_length=max_length)
-
+        print(input_ids)
         padding_length = max_length - len(input_ids)
         attention_mask = [1] * len(input_ids) + [0] * padding_length
         input_ids = input_ids + [103] * padding_length

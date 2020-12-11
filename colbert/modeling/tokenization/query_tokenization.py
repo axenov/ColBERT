@@ -3,13 +3,15 @@ import torch
 from transformers import BertTokenizerFast
 from colbert.modeling.tokenization.utils import _split_into_batches
 
+from colbert.parameters import BASE_MODEL, Q_TOKEN
+
 
 class QueryTokenizer():
     def __init__(self, query_maxlen):
-        self.tok = BertTokenizerFast.from_pretrained('bert-base-uncased')
+        self.tok = BertTokenizerFast.from_pretrained(BASE_MODEL)
         self.query_maxlen = query_maxlen
 
-        self.Q_marker_token, self.Q_marker_token_id = '[Q]', self.tok.get_vocab()['[unused0]']
+        self.Q_marker_token, self.Q_marker_token_id = '[Q]', self.tok.get_vocab()[Q_TOKEN]
         self.cls_token, self.cls_token_id = self.tok.cls_token, self.tok.cls_token_id
         self.sep_token, self.sep_token_id = self.tok.sep_token, self.tok.sep_token_id
         self.mask_token, self.mask_token_id = self.tok.mask_token, self.tok.mask_token_id

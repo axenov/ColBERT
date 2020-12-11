@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 from transformers import BertPreTrainedModel, BertModel, BertTokenizerFast
-from colbert.parameters import DEVICE
+from colbert.parameters import DEVICE, BASE_MODEL
 
 
 class ColBERT(BertPreTrainedModel):
@@ -20,7 +20,7 @@ class ColBERT(BertPreTrainedModel):
         self.skiplist = {}
 
         if self.mask_punctuation:
-            self.tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
+            self.tokenizer = BertTokenizerFast.from_pretrained(BASE_MODEL)
             self.skiplist = {w: True
                              for symbol in string.punctuation
                              for w in [symbol, self.tokenizer.encode(symbol, add_special_tokens=False)[0]]}

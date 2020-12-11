@@ -11,7 +11,7 @@ from colbert.utils.amp import MixedPrecisionManager
 
 from colbert.training.lazy_batcher import LazyBatcher
 from colbert.training.eager_batcher import EagerBatcher
-from colbert.parameters import DEVICE
+from colbert.parameters import DEVICE, BASE_MODEL
 
 from colbert.modeling.colbert import ColBERT
 from colbert.utils.utils import print_message
@@ -40,7 +40,7 @@ def train(args):
     if args.rank not in [-1, 0]:
         torch.distributed.barrier()
 
-    colbert = ColBERT.from_pretrained('bert-base-uncased',
+    colbert = ColBERT.from_pretrained(BASE_MODEL,
                                       query_maxlen=args.query_maxlen,
                                       doc_maxlen=args.doc_maxlen,
                                       dim=args.dim,

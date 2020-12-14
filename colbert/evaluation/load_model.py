@@ -28,11 +28,11 @@ def load_model(args, do_print=True):
     return colbert, checkpoint
 
 
-def load_model_custom(BERT, checkpoint_path, do_print=True):
+def load_model_custom(BERT, checkpoint_path, dim=128, query_maxlen=32, doc_maxlen=150, do_print=True):
     colbert = ColBERT.from_pretrained(BERT,
-                                      query_maxlen=32,
+                                      query_maxlen=query_maxlen,
                                       doc_maxlen=150,
-                                      dim=128,
+                                      dim=dim,
                                       similarity_metric="cosine",
                                       mask_punctuation=False)
     colbert = colbert.to(DEVICE)

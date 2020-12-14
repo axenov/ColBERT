@@ -28,7 +28,7 @@ def load_model(args, do_print=True):
     return colbert, checkpoint
 
 
-def load_model_custom(BERT, checkpoint_path, dim=128, query_maxlen=32, doc_maxlen=150, do_print=True):
+def load_model_custom(BERT, checkpoint_path, use_fp16=False, dim=128, query_maxlen=32, doc_maxlen=150, do_print=True):
     colbert = ColBERT.from_pretrained(BERT,
                                       query_maxlen=query_maxlen,
                                       doc_maxlen=150,
@@ -36,7 +36,8 @@ def load_model_custom(BERT, checkpoint_path, dim=128, query_maxlen=32, doc_maxle
                                       similarity_metric="cosine",
                                       mask_punctuation=False)
     colbert = colbert.to(DEVICE)
-
+    colbert = colbert.half()
+    
     print_message("#> Loading model checkpoint.", condition=do_print)
 
     checkpoint = load_checkpoint(checkpoint_path, colbert, do_print=do_print)

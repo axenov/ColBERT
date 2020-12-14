@@ -23,7 +23,7 @@ if __name__ == '__main__':
     
     checkpoint_path = "/media/data/47_KISS/23_MS_MARCO_BERTS/ColBERTv0.2/experiments/resume_with_german_triples/train.py/2020-12-13_17.05.21/checkpoints/colbert_CP_80k_resumed_german.dnn"
     
-    colbert, ckpt = load_model_custom(BASE_MODEL, checkpoint_path, dim=1024)
+    colbert, ckpt = load_model_custom(BASE_MODEL, checkpoint_path, use_fp16=True, dim=1024)
     
     inference = ModelInference(colbert, amp=False)
 

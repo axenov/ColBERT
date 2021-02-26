@@ -3,17 +3,18 @@ import torch
 from transformers import BertTokenizerFast
 from colbert.modeling.tokenization.utils import _split_into_batches, _sort_by_length
 
-from colbert.parameters import BASE_MODEL, D_TOKEN
+from colbert.parameters import BASE_MODEL, D_TOKEN, Q_TOKEN
 
 class DocTokenizer():
     def __init__(self, doc_maxlen):
         self.tok = BertTokenizerFast.from_pretrained(BASE_MODEL)
+        #self.tok.add_tokens([Q_TOKEN])
+        #self.tok.add_tokens([D_TOKEN])
         self.doc_maxlen = doc_maxlen
 
         self.D_marker_token, self.D_marker_token_id = '[D]', self.tok.get_vocab()[D_TOKEN]
-        self.cls_token, self.cls_token_id = self.tok.cls_token, self.tok.cls_token_id
-        self.sep_token, self.sep_token_id = self.tok.sep_token, self.tok.sep_token_id
-
+        self.cls_token, self.cls_token_id = self.tok.cls_token, self.tok.convert_tokens_to_ids(self.tok.cls_token)#self.tok.cls_token_id
+        self.sep_token, self.sep_token_id = self.tok.sep_token, self.tok.convert_tokens_to_ids(self.tok.sep_token)#self.tok.sep_token_id
         assert self.D_marker_token_id == 2
 
     def tokenize(self, batch_text, add_special_tokens=False):

@@ -4,9 +4,10 @@ import tqdm
 import torch
 import datetime
 import itertools
-
+import boto3
 from multiprocessing import Pool
 from collections import OrderedDict, defaultdict
+import colbert.parameters as params
 
 
 def print_message(*s, condition=True):
@@ -48,6 +49,11 @@ def save_checkpoint(path, epoch_idx, mb_idx, model, optimizer, arguments=None):
     checkpoint['arguments'] = arguments
 
     torch.save(checkpoint, path)
+
+    s3_client = boto3.client('s3', region_name=params.AWS_DEFAULT_REGION,  endpoint_url=params.CLOUD_URL, aws_access_key_id=params.AWS_ACCESS_KEY_ID, aws_secret_access_key=params.AWS_SECRET_ACCESS_KEY)
+    s3_client.upload_file(path, params.BUCKET, params.PATH+path.split('experiments/')[1])
+    
+
 
 
 def load_checkpoint(path, model, optimizer=None, do_print=True):

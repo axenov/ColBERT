@@ -3,7 +3,7 @@ import sys
 import ujson
 import mlflow
 import traceback
-
+import boto3
 from torch.utils.tensorboard import SummaryWriter
 from colbert.utils.utils import print_message, create_directory
 
@@ -32,7 +32,9 @@ class Logger():
         root = os.path.join(self.run.experiments_root, "logs/tensorboard/")
         logdir = '__'.join([self.run.experiment, self.run.script, self.run.name])
         logdir = os.path.join(root, logdir)
+        self.logdir=logdir
 
+        self.s3_client = boto3.client('s3', region_name=os.environ["AWS_DEFAULT_REGION"],  endpoint_url=os.environ["AWS_ENDPOINT_URL"], aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"], aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"])
         self.writer = SummaryWriter(log_dir=logdir)
         self.initialized_tensorboard = True
 
@@ -78,7 +80,11 @@ class Logger():
         if log_to_mlflow:
             mlflow.log_metric(name, value, step=step)
         self.writer.add_scalar(name, value, step)
-
+        
+        for root,dirs,files in os.walk(self.logdir):
+            for file in files:
+                s3_client.upload_file(os.path.join(root,file), os.environ["ENV AWS_BUCKET"], os.environ["ENV AWS_BUCKET_PATH"]+self.logdir.split('experiments/')[1])
+    
     def log_new_artifact(self, path, content):
         with open(path, 'w') as f:
             f.write(content)

@@ -51,7 +51,7 @@ def save_checkpoint(path, epoch_idx, mb_idx, model, optimizer, arguments=None):
     torch.save(checkpoint, path)
 
     s3_client = boto3.client('s3', region_name=os.environ["AWS_DEFAULT_REGION"],  endpoint_url=os.environ["AWS_ENDPOINT_URL"], aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"], aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"])
-    s3_client.upload_file(path, os.environ["ENV AWS_BUCKET"], os.environ["ENV AWS_BUCKET_PATH"]+path.split('experiments/')[1])
+    s3_client.upload_file(path, os.environ["AWS_BUCKET"], os.environ["AWS_BUCKET_PATH"]+path.split('experiments/')[1])
     
 
 

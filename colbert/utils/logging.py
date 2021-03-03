@@ -83,7 +83,7 @@ class Logger():
 
         for root,dirs,files in os.walk(self.logdir):
             for file in files:
-                self.s3_client.upload_file(os.path.join(root,file), os.environ["ENV AWS_BUCKET"], os.environ["ENV AWS_BUCKET_PATH"]+self.logdir.split('experiments/')[1])
+                self.s3_client.upload_file(os.path.join(root,file), os.environ["AWS_BUCKET"], os.environ["AWS_BUCKET_PATH"]+self.logdir.split('experiments/')[1])
     
     def log_new_artifact(self, path, content):
         with open(path, 'w') as f:

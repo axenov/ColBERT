@@ -1,4 +1,5 @@
 train_data="eval.multi.triples.train.small.tsv"
+<<<<<<< HEAD
 batch=16
 dim=64
 model=base
@@ -8,6 +9,19 @@ while getopts f:b:d:m:e: flag
 do
     case "${flag}" in
         f) train_data=${OPTARG};;
+=======
+batch=100
+dim=64
+model=base
+experiment=base
+steps=400000
+
+while getopts f:n:b:d:m:e: flag
+do
+    case "${flag}" in
+        f) train_data=${OPTARG};;
+        n) steps=${OPTARG};;
+>>>>>>> 0.2_cloud
         b) batch=${OPTARG};;
         d) dim=${OPTARG};;
 		m) model=${OPTARG};;
@@ -35,4 +49,8 @@ if test ! -f "DATA/${train_data}"; then
 fi
 
 
+<<<<<<< HEAD
 python -m colbert.train --triples DATA/${train_data} --query_maxlen 32 --doc_maxlen 150 --bsize $batch --dim $dim --amp --experiment $experiment
+=======
+python -m colbert.train --triples DATA/${train_data} --query_maxlen 32 --doc_maxlen 150 --bsize $batch --dim $dim --amp --experiment $experiment --maxsteps $steps
+>>>>>>> 0.2_cloud

@@ -114,5 +114,10 @@ def train(args):
             Run.log_metric('train/examples', num_examples_seen, step=batch_idx, log_to_mlflow=log_to_mlflow)
             Run.log_metric('train/throughput', num_examples_seen / elapsed, step=batch_idx, log_to_mlflow=log_to_mlflow)
 
+            if batch_idx % 10000 == 0:
+                for root,dirs,files in os.walk(Run._logger.logdir):
+                    for file in files:
+                        Run._logger.s3_client.upload_file(os.path.join(root,file), os.environ["AWS_BUCKET"], os.environ["AWS_BUCKET_PATH"]+Run._logger.logdir.split('experiments/')[1]+"/"+file)
+
             print_message(batch_idx, avg_loss)
             manage_checkpoints(args, colbert, optimizer, batch_idx+1)

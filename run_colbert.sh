@@ -27,6 +27,11 @@ then
   git checkout 0.2_cloud
 fi
 
+if [[ $model = "uncased" ]]
+then
+  git checkout 0.2_uncased_cloud
+fi
+
 mkdir -p DATA
 
 if test ! -f "DATA/${train_data}"; then

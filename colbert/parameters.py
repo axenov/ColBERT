@@ -3,18 +3,18 @@ import torch
 """
 Original Config
 """
-
+"""
 BASE_MODEL = 'bert-base-uncased'
 Q_TOKEN = '[unused0]'
 D_TOKEN = '[unused1]'
+"""
 
 """
 Example Config for Multilingual BERT
-
+"""
 BASE_MODEL = 'bert-base-multilingual-cased'
 Q_TOKEN = '[unused1]'
 D_TOKEN = '[unused2]'
-"""
 
 
 DEVICE = torch.device("cuda")

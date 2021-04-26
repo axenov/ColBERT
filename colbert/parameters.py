@@ -12,7 +12,7 @@ D_TOKEN = '[unused1]'
 """
 Example Config for Multilingual BERT
 """
-BASE_MODEL = 'bert-base-multilingual-cased'
+BASE_MODEL = 'bert-base-multilingual-uncased'
 Q_TOKEN = '[unused1]'
 D_TOKEN = '[unused2]'
 

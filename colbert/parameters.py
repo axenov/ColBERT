@@ -4,7 +4,7 @@ import torch
 Original Config
 """
 
-BASE_MODEL = 'dbmdz/bert-base-german-cased'
+BASE_MODEL = 'dbmdz/bert-base-german-uncased'
 Q_TOKEN = 'unused0'
 D_TOKEN = 'unused1'
 

@@ -8,7 +8,6 @@ from colbert.parameters import DEVICE
 
 class ModelInference():
     def __init__(self, colbert: ColBERT, amp=False):
-        assert colbert.training is False
 
         self.colbert = colbert
         self.query_tokenizer = QueryTokenizer(colbert.query_maxlen)
@@ -74,9 +73,9 @@ class ModelInference():
 def _stack_3D_tensors(groups):
     bsize = sum([x.size(0) for x in groups])
     maxlen = max([x.size(1) for x in groups])
-    hdim = groups[0].size(2)
+    #hdim = groups[0].size(2)
 
-    output = torch.zeros(bsize, maxlen, hdim, device=groups[0].device, dtype=groups[0].dtype)
+    output = torch.zeros(bsize, maxlen, device=groups[0].device, dtype=groups[0].dtype)
 
     offset = 0
     for x in groups:

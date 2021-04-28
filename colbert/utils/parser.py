@@ -23,7 +23,6 @@ class Arguments():
     def add_model_parameters(self):
         # Core Arguments
         self.add_argument('--similarity', dest='similarity', default='cosine', choices=['cosine', 'l2'])
-        self.add_argument('--dim', dest='dim', default=128, type=int)
         self.add_argument('--query_maxlen', dest='query_maxlen', default=32, type=int)
         self.add_argument('--doc_maxlen', dest='doc_maxlen', default=180, type=int)
 
@@ -43,7 +42,7 @@ class Arguments():
         self.add_argument('--amp', dest='amp', default=False, action='store_true')
 
     def add_model_inference_parameters(self):
-        self.add_argument('--checkpoint', dest='checkpoint', required=True)
+        self.add_argument('--checkpoint', dest='checkpoint', required=False)
         self.add_argument('--bsize', dest='bsize', default=128, type=int)
         self.add_argument('--amp', dest='amp', default=False, action='store_true')
 

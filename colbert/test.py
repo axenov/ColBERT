@@ -24,7 +24,7 @@ def main():
     args = parser.parse()
 
     with Run.context():
-        args.colbert, args.checkpoint = load_colbert(args)
+        args.colbert = load_colbert(args)
         args.qrels = load_qrels(args.qrels)
 
         if args.collection or args.queries:

@@ -69,7 +69,6 @@ def evaluate(args):
                     metrics.print_metrics(query_idx)
                     metrics.log(query_idx)
 
-                print_message("#> checkpoint['batch'] =", args.checkpoint['batch'], '\n')
                 print("rlogger.filename =", rlogger.filename)
 
                 if len(args.milliseconds) > 1:

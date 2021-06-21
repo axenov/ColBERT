@@ -1,6 +1,6 @@
 import torch
 
-from transformers import BertTokenizerFast
+from transformers import XLMRobertaTokenizer
 from colbert.modeling.tokenization.utils import _split_into_batches
 
 from colbert.parameters import BASE_MODEL, Q_TOKEN, D_TOKEN
@@ -8,7 +8,7 @@ from colbert.parameters import BASE_MODEL, Q_TOKEN, D_TOKEN
 
 class QueryTokenizer():
     def __init__(self, query_maxlen):
-        self.tok = BertTokenizerFast.from_pretrained(BASE_MODEL)
+        self.tok = XLMRobertaTokenizer.from_pretrained(BASE_MODEL)
         #self.tok.add_tokens([Q_TOKEN])
         #self.tok.add_tokens([D_TOKEN])
         self.query_maxlen = query_maxlen
@@ -18,7 +18,7 @@ class QueryTokenizer():
         self.sep_token, self.sep_token_id = self.tok.sep_token, self.tok.convert_tokens_to_ids(self.tok.sep_token)#self.tok.sep_token_id
         self.mask_token, self.mask_token_id = self.tok.mask_token, self.tok.convert_tokens_to_ids(self.tok.mask_token)#self.tok.mask_token_id
 
-        assert self.Q_marker_token_id == 1 and self.mask_token_id == self.tok.convert_tokens_to_ids(self.tok.mask_token)#103
+        #assert self.Q_marker_token_id == 1 and self.mask_token_id == self.tok.convert_tokens_to_ids(self.tok.mask_token)#103
 
     def tokenize(self, batch_text, add_special_tokens=False):
         assert type(batch_text) in [list, tuple], (type(batch_text))

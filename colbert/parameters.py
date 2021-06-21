@@ -4,9 +4,9 @@ import torch
 Original Config
 """
 
-BASE_MODEL = 'dbmdz/bert-base-german-uncased'
-Q_TOKEN = 'unused0'
-D_TOKEN = 'unused1'
+BASE_MODEL = 'microsoft/Multilingual-MiniLM-L12-H384'
+Q_TOKEN = 'QT'
+D_TOKEN = 'DT'
 
 """
 Example Config for BERT

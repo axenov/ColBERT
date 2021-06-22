@@ -4,7 +4,7 @@ import torch
 Original Config
 """
 
-BASE_MODEL = 'microsoft/Multilingual-MiniLM-L12-H384'
+BASE_MODEL = 'nreimers/mMiniLMv2-L6-H384-distilled-from-XLMR-Large'
 Q_TOKEN = 'QT'
 D_TOKEN = 'DT'
 
